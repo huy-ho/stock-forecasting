@@ -36,6 +36,7 @@ import geopandas as gpd
 from statsmodels.tsa.arima_model import ARIMA
 from xgboost import XGBRegressor, plot_importance, plot_tree
 from pandas.plotting import lag_plot
+from keras.models import load_model
 
 #data
 data = yf.download('NVDA AMD INTC', start='2014-01-01', end='2021-08-04', group_by='ticker')
@@ -72,3 +73,8 @@ five_year_div_yield.columns = ['Ticker', 'Dividend Yield (5 Years)']
 
 company_comparison = pd.merge(market_cap, company_hq, left_on='Ticker', right_on='Ticker')
 company_comparison = pd.merge(company_comparison, five_year_div_yield, left_on='Ticker', right_on='Ticker')
+
+
+nvda = pd.DataFrame(data['NVDA']['Close'])
+nvda.columns = ['Close']
+train_nvda, test_nvda = nvda[0:int(len(nvda) * 0.8)], nvda[int(len(nvda) * 0.8):]

@@ -37,7 +37,7 @@ from statsmodels.tsa.arima_model import ARIMA
 from xgboost import XGBRegressor, plot_importance, plot_tree
 from pandas.plotting import lag_plot
 from keras.models import load_model
-
+"""
 #data
 data = yf.download('NVDA AMD INTC', start='2014-01-01', end='2021-08-04', group_by='ticker')
 
@@ -77,4 +77,14 @@ company_comparison = pd.merge(company_comparison, five_year_div_yield, left_on='
 
 nvda = pd.DataFrame(data['NVDA']['Close'])
 nvda.columns = ['Close']
-train_nvda, test_nvda = nvda[0:int(len(nvda) * 0.8)], nvda[int(len(nvda) * 0.8):]
+train_nvda, test_nvda = nvda[0:int(len(nvda) * 0.8)], nvda[int(len(nvda) * 0.8):]"""
+
+def grab_ticker(ticker):
+    data = yf.download(ticker, start='2014-01-01', end='2021-08-04')
+    return data
+    
+def get_closing_df(ticker):
+    data = grab_ticker(ticker)
+    df = pd.DataFrame(data['Close'])
+    df.columns = ['Close']
+    return df
